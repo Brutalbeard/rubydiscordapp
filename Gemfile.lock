@@ -36,6 +36,7 @@ GEM
       rack
     rbnacl (3.3.0)
       ffi
+    redis (3.2.2)
     rest-client (1.8.0)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
@@ -66,6 +67,7 @@ DEPENDENCIES
   discordrb
   json
   rack
+  redis
   sinatra
 
 BUNDLED WITH
