@@ -2,6 +2,7 @@ require 'sinatra'
 require 'discordrb' #uber fancy and useable library
 require 'json'
 require 'open-uri'
+require 'pstore'
 require 'redis'
 
 bot = Discordrb::Commands::CommandBot.new("jceloria@icloud.com", "bitemeweirddude", "/", {advanced_functionality: false}) #credentials for login, the last string is the thing you have to type to run our commands.
