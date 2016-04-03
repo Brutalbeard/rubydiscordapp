@@ -183,11 +183,11 @@ bot.command(:gifme, description: "Gives you a random gif based off what you type
 end
 
 bot.command(:makeMe, description: "Initializes your character sheet", usage: "/makeMe Connor") do |event, *args|
-  player = event.user.id
-
-  SET player:name "#{args.join(' ')}"
-
-  GET player:name
+  player = PStore.new("#{event.user.id}.pstore")
+  player.transaction do
+    player[:name] = args.join(' ')
+  end
+  player.transaction {player[:name]}
 end
 
 bot.command(:makeStat, description: "Generates a stat, checks for preexisting.", usage: "/makeStat con 10") do |event, *args|
