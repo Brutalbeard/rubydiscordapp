@@ -183,8 +183,9 @@ bot.command(:gifme, description: "Gives you a random gif based off what you type
 end
 
 bot.command(:makeMe, description: "Initializes your character sheet", usage: "/makeMe Connor") do |event, *args|
-  SET player:name {args.join(' ')}
-  GET player:name
+  player = event.user.id
+  $redis.SET player:name {args.join(' ')}
+  $redis.GET player:name
 end
 
 bot.command(:makeStat, description: "Generates a stat, checks for preexisting.", usage: "/makeStat con 10") do |event, *args|
