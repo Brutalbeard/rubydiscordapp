@@ -183,7 +183,7 @@ bot.command(:gifme, description: "Gives you a random gif based off what you type
 end
 
 bot.command(:makeMe, description: "Initializes your character sheet", usage: "/makeMe Connor") do |event, *args|
-  SET player:name {"John"}
+  SET player {name: args.join(' ')}
   GET player:name
 end
 
