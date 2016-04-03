@@ -187,8 +187,8 @@ end
 bot.command(:makeMe, description: "Initializes your character sheet", usage: "/makeMe Connor") do |event, *args|
   player = event.user.id
   name = args.join(' ')
-  $redis.set player name
-  $redis.get player name
+  $redis.set(player, name)
+  $redis.get(player)
 end
 
 bot.command(:makeStat, description: "Generates a stat, checks for preexisting.", usage: "/makeStat con 10") do |event, *args|
