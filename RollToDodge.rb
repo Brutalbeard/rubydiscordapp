@@ -192,19 +192,15 @@ bot.command(:makeMe, description: "Initializes your character sheet", usage: "/m
 end
 
 bot.command(:makeStat, description: "Generates a stat, checks for preexisting.", usage: "/makeStat con 10") do |event, *args|
-  player = PStore.new("#{event.user.id}.pstore")
+  player = event.user.id
   statName = checkValidStat(args[0])
+  number = args[2]
   if statName == nil
     "#{args[0]} is not a valid Attribute"
   else
-    player.transaction do
-      if player.root?(:"#{statName}") == true
-        "#{statName} already exists!"
-      else
-        player[:"#{statName}"] = args[1]
-      end
-    end
+    $redis.set("#{player}", "#{statName}", "#{number}")
   end
+  $redis.get("#{player}", "#{statName}", "#{number}" )
 end
 
 bot.command(:changeStat, description: "If you screwed the pooch, ask Johnny or Fletcher to fix your crap with this.", usage: "@BrutalBeard please change my dex to 11? I owe you a bj. Brutalbeard: /changeStat @loser dex 11 ") do |event, *args|
