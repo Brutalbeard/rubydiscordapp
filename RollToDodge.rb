@@ -5,6 +5,8 @@ require 'open-uri'
 require 'pstore'
 require 'redis'
 
+$redis = Redis.new(url: ENV["REDIS_URL"])
+
 bot = Discordrb::Commands::CommandBot.new("jceloria@icloud.com", "bitemeweirddude", "/", {advanced_functionality: false}) #credentials for login, the last string is the thing you have to type to run our commands.
 
 
@@ -185,8 +187,8 @@ end
 bot.command(:makeMe, description: "Initializes your character sheet", usage: "/makeMe Connor") do |event, *args|
   player = event.user.id
   name = args.join(' ')
-  set player name
-  get player name
+  $redis.set player name
+  $redis.get player name
 end
 
 bot.command(:makeStat, description: "Generates a stat, checks for preexisting.", usage: "/makeStat con 10") do |event, *args|
