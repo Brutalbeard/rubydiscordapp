@@ -186,6 +186,8 @@ bot.command(:makeMe, description: "Initializes your character sheet", usage: "/m
   player = event.user.id
 
   SET player name args.join(' ')
+
+  GET player name
 end
 
 bot.command(:makeStat, description: "Generates a stat, checks for preexisting.", usage: "/makeStat con 10") do |event, *args|
