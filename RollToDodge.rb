@@ -186,8 +186,8 @@ end
 
 bot.command(:makeMe, description: "Initializes your character sheet", usage: "/makeMe Connor") do |event, *args|
   player = event.user.id
-  name = args.join(' ')
-  $redis.hset player name
+  givenName = args.join(' ')
+  $redis.hset player name "#{givenName}"
   $redis.hget player name
 end
 
