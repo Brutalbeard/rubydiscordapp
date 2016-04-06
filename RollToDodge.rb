@@ -188,9 +188,9 @@ bot.command(:makeMe, description: "Initializes your character sheet", usage: "/m
   player = event.user.id
   givenName = args.join(' ')
   event.respond "Ok, we've made the fucking variables..."
-  event.respond $redis.set "#{player}:name #{givenName}"
+  $redis.set "#{player}:name #{givenName}"
   event.respond "Set the name"
-  event.respond $redis.get "#{player}:name"
+  $redis.get "#{player}:name"
 end
 
 bot.command(:makeStat, description: "Generates a stat, checks for preexisting.", usage: "/makeStat con 10") do |event, *args|
