@@ -187,7 +187,8 @@ end
 bot.command(:makeMe, description: "Initializes your character sheet", usage: "/makeMe Connor") do |event, *args|
   player = event.user.id
   givenName = args.join(' ')
-  $redis.set "#{player}:name #{givenName}"
+  event.respond "Ok, we've made the fucking variables..."
+  event.respond $redis.set "#{player}:name #{givenName}"
   event.respond "Set the name"
   event.respond $redis.get "#{player}:name"
 end
