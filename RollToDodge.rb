@@ -225,8 +225,8 @@ end
 bot.command(:showMe, description: "Tells you one of your stats", usage: "/showMe name, or /showMe con") do |event, arg|
   player = event.user.id
   statName = arg
-  name = $redis.get 'player:name'
-  statNum = $redis.get 'player:#{statName}'
+  name = $redis.get "#{player}:name"
+  statNum = $redis.get "#{player}:#{statName}"
   if statName == nil
     "#{arg} is not a valid Attribute"
   else
