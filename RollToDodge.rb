@@ -226,7 +226,7 @@ bot.command(:showMe, description: "Tells you one of your stats", usage: "/showMe
   if statName == nil
     "#{arg} is not a valid Attribute"
   else
-    "#{name}'s #{statName.capitalize} is #{statNum}." #The bonus is #{$redis.get "player:#{statName}".to_i-10/2}."
+    "#{name}'s #{statName.capitalize} is #{statNum}. The bonus is #{(statNum.to_i-10)/2}."
   end
 end
 
