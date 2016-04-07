@@ -187,10 +187,8 @@ end
 bot.command(:makeMe, description: "Initializes your character sheet", usage: "/makeMe Connor") do |event, *args|
   player = event.user.id
   givenName = args.join(' ')
-  event.respond "Ok, we've made the fucking variables...#{player} & #{givenName}"
   $redis.set "#{player}:name" givenName
-  event.respond "Set the name"
-  $redis.get "#{player}:name"
+  $redis.get "#{player}:name has been generated"
 end
 
 bot.command(:makeStat, description: "Generates a stat, checks for preexisting.", usage: "/makeStat con 10") do |event, *args|
@@ -200,23 +198,22 @@ bot.command(:makeStat, description: "Generates a stat, checks for preexisting.",
   if statName == nil
     "#{args[0]} is not a valid Attribute"
   else
-    $redis.set("#{player}", "#{statName}", "#{number}")
+    $redis.set "#{player}:#{statName}" number
   end
-  $redis.get("#{player}", "#{statName}", "#{number}" )
+  $redis.get"#{player};#{statName}" number
 end
 
 bot.command(:changeStat, description: "If you screwed the pooch, ask Johnny or Fletcher to fix your crap with this.", usage: "@BrutalBeard please change my dex to 11? I owe you a bj. Brutalbeard: /changeStat @loser dex 11 ") do |event, *args|
   authUsers = [150283399192510464, 143886187122262017]
   if(authUsers.include? event.user.id)
     chgTarget = bot.parse_mention(args[0])
-    player = PStore.new("#{chgTarget.id}.pstore")
+    player = event.user.id
     statName = checkValidStat(args[1])
     if statName == nil
       "#{args[0]} is not a valid Attribute"
     else
-      player.transaction do
-        player[:"#{statName}"] = args[2]
-      end
+      $redis.set "player:#{statName}" args[2]
+      $redis.get "player:#{statName}"
     end
   else
     "Unauthorized user. Get hosed biatch."
