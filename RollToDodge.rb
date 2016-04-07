@@ -211,11 +211,7 @@ bot.command(:changeStat, description: "If you screwed the pooch, ask Johnny or F
     chgTarget = bot.parse_mention(args[0])
     player = chgTarget
     statName = args[1]
-    if statName == nil
-      "#{args[0]} is not a valid Attribute"
-    else
       $redis.set "player:#{statName}", args[2]
-    end
   else
     "Unauthorized user. Get hosed biatch."
   end
