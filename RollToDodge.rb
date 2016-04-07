@@ -209,7 +209,7 @@ bot.command(:changeStat, description: "If you screwed the pooch, ask Johnny or F
   authUsers = [150283399192510464, 143886187122262017]
   if(authUsers.include? event.user.id)
     chgTarget = bot.parse_mention(args[0])
-    player = PStore.new("#{chgTarget.id}.pstore")
+    player = chgTarget
     statName = args[1]
     if statName == nil
       "#{args[0]} is not a valid Attribute"
