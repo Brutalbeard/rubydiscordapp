@@ -187,10 +187,7 @@ end
 bot.command(:makeMe, description: "Initializes your character sheet", usage: "/makeMe Connor") do |event, *args|
   player = event.user.id
   givenName = args.join(' ').capitalize
-  event.respond "Ok, we've made the fucking variables...#{player} & #{givenName}"
   $redis.set "#{player}:name", givenName
-  event.respond "Set the name"
-  $redis.get "#{player}:name"
 end
 
 bot.command(:makeStat, description: "Generates a stat, checks for preexisting.", usage: "/makeStat con 10") do |event, *args|
@@ -202,17 +199,14 @@ bot.command(:makeStat, description: "Generates a stat, checks for preexisting.",
   else
     $redis.set "#{player}:#{statName}", number
   end
-  $redis.get "#{player}:#{statName}"
 end
 
 bot.command(:changeStat, description: "If you screwed the pooch, ask Johnny or Fletcher to fix your crap with this.", usage: "@BrutalBeard please change my dex to 11? I owe you a bj. Brutalbeard: /changeStat @loser dex 11 ") do |event, *args|
   authUsers = [150283399192510464, 143886187122262017]
   if(authUsers.include? event.user.id)
     chgTarget = bot.parse_mention(args[0]).id
-    event.respond "Auth User: #{event.user.id}\nUID of who I'm changing: #{chgTarget}"
     statName = args[1]
       $redis.set "#{chgTarget}:#{statName}", args[2]
-      $redis.get "#{chgTarget}:#{statName}"
   else
     "Unauthorized user. Get hosed biatch."
   end
