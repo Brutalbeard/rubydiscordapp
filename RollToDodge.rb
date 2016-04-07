@@ -223,7 +223,7 @@ end
 
 
 bot.command(:showMe, description: "Tells you one of your stats", usage: "/showMe name, or /showMe con") do |event, arg|
-  player = PStore.new("#{event.user.id}.pstore")
+  player = event.user.id
   statName = arg
   if statName == nil
     "#{arg} is not a valid Attribute"
