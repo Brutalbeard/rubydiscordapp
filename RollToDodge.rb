@@ -200,7 +200,7 @@ bot.command(:makeStat, description: "Generates a stat, checks for preexisting.",
   else
     $redis.set "#{player}:#{statName}" number
   end
-  $redis.get"#{player};#{statName}" number
+  $redis.get"#{player}:#{statName}"
 end
 
 bot.command(:changeStat, description: "If you screwed the pooch, ask Johnny or Fletcher to fix your crap with this.", usage: "@BrutalBeard please change my dex to 11? I owe you a bj. Brutalbeard: /changeStat @loser dex 11 ") do |event, *args|
@@ -212,8 +212,8 @@ bot.command(:changeStat, description: "If you screwed the pooch, ask Johnny or F
     if statName == nil
       "#{args[0]} is not a valid Attribute"
     else
-      $redis.set "player:#{statName}" args[2]
-      $redis.get "player:#{statName}"
+      $redis.set "#{player}:#{statName}" args[2]
+      $redis.get "#{player}:#{statName}"
     end
   else
     "Unauthorized user. Get hosed biatch."
