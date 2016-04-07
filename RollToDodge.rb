@@ -211,7 +211,7 @@ bot.command(:changeStat, description: "If you screwed the pooch, ask Johnny or F
     chgTarget = bot.parse_mention(args[0])
     player = chgTarget
     statName = args[1]
-      $redis.set "player:#{statName}", args[2]
+      $redis.set "#{player}:#{statName}", args[2]
   else
     "Unauthorized user. Get hosed biatch."
   end
