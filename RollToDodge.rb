@@ -225,10 +225,12 @@ end
 bot.command(:showMe, description: "Tells you one of your stats", usage: "/showMe name, or /showMe con") do |event, arg|
   player = event.user.id
   statName = arg
+  name = $redis.get 'player:name'
+  statNum = $redis.get 'player:#{statName}'
   if statName == nil
     "#{arg} is not a valid Attribute"
   else
-    "#{$redis.get 'player:name'}'s #{statName.capitalize} is #{$redis.get 'player:#{statName}'}." #The bonus is #{$redis.get "player:#{statName}".to_i-10/2}."
+    "#{name}'s #{statName.capitalize} is #{statNum}." #The bonus is #{$redis.get "player:#{statName}".to_i-10/2}."
   end
 end
 
