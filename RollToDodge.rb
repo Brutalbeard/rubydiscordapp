@@ -228,13 +228,13 @@ end
 bot.command(:showAll) do |event|
   player = event.user.id
   event.respond $redis.get "#{player}"
-  event.respond $redis.get "Name: #{player}:name"
-  event.respond $redis.get "Dexterity: #{player}:dex"
-  event.respond $redis.get "Constitution: #{player}:con"
-  event.respond $redis.get "Intelligence: #{player}:int"
-  event.respond $redis.get "Wisdom: #{player}:wis"
-  event.respond $redis.get "Strength: #{player}:str"
-  event.respond $redis.get "Charisma: #{player}:cha"
+  event.respond "Name: " $redis.get "#{player}:name"
+  event.respond "Dexterity: " $redis.get "#{player}:dex"
+  event.respond "Constitution: " $redis.get "#{player}:con"
+  event.respond "Intelligence: " $redis.get "#{player}:int"
+  event.respond "Wisdom: " $redis.get "#{player}:wis"
+  event.respond "Strength: " $redis.get "#{player}:str"
+  event.respond "Charisma: " $redis.get "#{player}:cha"
 end
 
 
