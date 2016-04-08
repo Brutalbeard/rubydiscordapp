@@ -225,5 +225,17 @@ bot.command(:showMe, description: "Tells you one of your stats", usage: "/showMe
   end
 end
 
+bot.command(:showAll) do |event|
+  player = event.user.id
+  event.respond $redis.get "#{player}"
+  event.respond $redis.get "Name: #{player}:name"
+  event.respond $redis.get "Dexterity: #{player}:dex"
+  event.respond $redis.get "Constitution: #{player}:con"
+  event.respond $redis.get "Intelligence: #{player}:int"
+  event.respond $redis.get "Wisdom: #{player}:wis"
+  event.respond $redis.get "Strength: #{player}:str"
+  event.respond $redis.get "Charisma: #{player}:cha"
+end
+
 
 bot.run
