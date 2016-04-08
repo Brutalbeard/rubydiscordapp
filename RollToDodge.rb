@@ -241,7 +241,7 @@ bot.command(:showAll) do |event|
   event.respond "Intelligence: #{int}"
   event.respond "Wisdom: #{wis}"
   event.respond "Strength: #{str}"
-  event.respond "Charisma: #{cha}"
+  "Charisma: #{cha}"
 end
 
 
