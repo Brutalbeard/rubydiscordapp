@@ -207,14 +207,16 @@ bot.command(:changeStat, description: "If you screwed the pooch, ask Johnny or F
   if(authUsers.include? event.user.id)
     chgTarget = bot.parse_mention(args[0]).id
     statName = statCheck(args[1])
-      $redis.set "#{chgTarget}:#{statName}", args[2]
+    args.delete_at(0)
+    args.delete_at(0)
+    $redis.set "#{chgTarget}:#{statName}", args.join(' ')
   else
     "Unauthorized user. Get hosed biatch."
   end
 end
 
 
-bot.command(:showMe, description: "Tells you one of your stats", usage: "/showMe name, or /showMe con") do |event, arg|
+bot.command(:showMe, description: "Tells you one of your stats", usage: "/showMe name, or /showMe con, or /showMe all") do |event, arg|
   player = event.user.id
   statName = statCheck(arg)
   name = $redis.get "#{player}:name"
@@ -242,25 +244,6 @@ bot.command(:showMe, description: "Tells you one of your stats", usage: "/showMe
   else
     "#{name}'s #{statName.capitalize} is #{statNum}. The bonus is #{(statNum.to_i-10)/2}."
   end
-end
-
-bot.command(:showAll) do |event|
-  player = event.user.id
-  dex = $redis.get "#{player}:dex"
-  name = $redis.get "#{player}:name"
-  con = $redis.get "#{player}:con"
-  int = $redis.get "#{player}:int"
-  wis = $redis.get "#{player}:wis"
-  str = $redis.get "#{player}:str"
-  cha = $redis.get "#{player}:cha"
-  #event.respond $redis.get "#{player}"
-  event.respond "Name: #{name}"
-  event.respond "Dexterity: #{dex}"
-  event.respond "Constitution: #{con}"
-  event.respond "Intelligence: #{int}"
-  event.respond "Wisdom: #{wis}"
-  event.respond "Strength: #{str}"
-  "Charisma: #{cha}"
 end
 
 
