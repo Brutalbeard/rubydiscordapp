@@ -9,10 +9,16 @@ $redis = Redis.new(url: ENV["REDIS_URL"])
 
 bot = Discordrb::Commands::CommandBot.new("jceloria@icloud.com", "bitemeweirddude", "/", {advanced_functionality: false}) #credentials for login, the last string is the thing you have to type to run our commands.
 
+def statCheck(checkMe) #checks for a valid attribute, and returns that as lower case
+  returnMe = nil
+  returnMe = checkMe.match(/dex|con|int|str|wis|cha|name/i)
 
-#bot.message(containing: "test") do |event| #obvious test message. Leaving it in here as 'message' works slightly differently from command.
-#  event.respond "Your test worked- even though fletcher is in bed"
-#end
+  if returnMe != nil
+    return returnMe.to_s.downcase
+  else
+    return nil
+  end
+end
 
 bot.message(from: not!("Iblan"), containing: "Suck it Ian!") do |event| #Will probably make this cooler. You'll see.
   event.respond "#{event.author.mention} fires an arrow at Ian!"
@@ -45,11 +51,6 @@ bot.command(:roll, description: "Returns a roll.", usage: "Type /roll 1d20 as an
   end
   text #so this also differs from the messages above. Don't have to put event.respond. That's what was causing those double responses earlier. Just put the variable adter the last 'end' which closes out the 'do' at the top. Then it sends back that variable. Boom.
 end
-
-#Functional remote update from github. No redundancy though. If github re-write crashes on startup, have to remote into the RPi and restart manually using
-#cd Discord\ App
-#nohup ruby RollToDodge.rb
-#Took out update
 
 bot.command(:define, description: "Defines a word using Urban Dictionary", usage: "/define chode") {|event, *args|
 
@@ -89,7 +90,7 @@ bot.command(:whoami, description: "Gives your name and user ID. Also tells you y
   end
 end
 
-bot.command(:whois, descrption: "Gives you the useful info about your cohorts", usage: "/whois @RollToDodge") do |event, arg|
+bot.command(:whois, description: "Gives you the useful info about your cohorts", usage: "/whois @RollToDodge") do |event, arg|
   user1 = bot.parse_mention(arg)
   event.respond "User Name: #{user1.name} \n"
   event.respond "#{user1.status}\n"
@@ -187,17 +188,17 @@ end
 bot.command(:makeMe, description: "Initializes your character sheet", usage: "/makeMe Connor") do |event, *args|
   player = event.user.id
   givenName = args.join(' ').capitalize
-  $redis.set "#{player}:name", givenName
+  $redis.setnx "#{player}:name", givenName
 end
 
 bot.command(:makeStat, description: "Generates a stat, checks for preexisting.", usage: "/makeStat con 10") do |event, *args|
   player = event.user.id
-  statName = args[0]
+  statName = statCheck(args[0])
   number = args[1]
   if statName == nil
     "#{statName} is not a valid Attribute"
   else
-    $redis.set "#{player}:#{statName}", number
+    $redis.setnx "#{player}:#{statName}", number
   end
 end
 
@@ -205,7 +206,7 @@ bot.command(:changeStat, description: "If you screwed the pooch, ask Johnny or F
   authUsers = [150283399192510464, 143886187122262017]
   if(authUsers.include? event.user.id)
     chgTarget = bot.parse_mention(args[0]).id
-    statName = args[1]
+    statName = statCheck(args[1])
       $redis.set "#{chgTarget}:#{statName}", args[2]
   else
     "Unauthorized user. Get hosed biatch."
@@ -215,11 +216,29 @@ end
 
 bot.command(:showMe, description: "Tells you one of your stats", usage: "/showMe name, or /showMe con") do |event, arg|
   player = event.user.id
-  statName = arg
+  statName = statCheck(arg)
   name = $redis.get "#{player}:name"
   statNum = $redis.get "#{player}:#{statName}"
   if statName == nil
     "#{arg} is not a valid Attribute"
+  elsif statName == "all"
+    dex = $redis.get "#{player}:dex"
+    name = $redis.get "#{player}:name"
+    con = $redis.get "#{player}:con"
+    int = $redis.get "#{player}:int"
+    wis = $redis.get "#{player}:wis"
+    str = $redis.get "#{player}:str"
+    cha = $redis.get "#{player}:cha"
+    #event.respond $redis.get "#{player}"
+    event.respond "Name: #{name}"
+    event.respond "Dexterity: #{dex}"
+    event.respond "Constitution: #{con}"
+    event.respond "Intelligence: #{int}"
+    event.respond "Wisdom: #{wis}"
+    event.respond "Strength: #{str}"
+    "Charisma: #{cha}"
+  elsif statName == "name"
+    "Character name is #{name}"
   else
     "#{name}'s #{statName.capitalize} is #{statNum}. The bonus is #{(statNum.to_i-10)/2}."
   end
