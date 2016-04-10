@@ -11,7 +11,7 @@ bot = Discordrb::Commands::CommandBot.new("jceloria@icloud.com", "bitemeweirddud
 
 def statCheck(checkMe) #checks for a valid attribute, and returns that as lower case
   returnMe = nil
-  returnMe = checkMe.match(/dex|con|int|str|wis|cha|name/i)
+  returnMe = checkMe.match(/dex|con|int|str|wis|cha|name|all/i)
 
   if returnMe != nil
     return returnMe.to_s.downcase
@@ -238,7 +238,7 @@ bot.command(:showMe, description: "Tells you one of your stats", usage: "/showMe
     event.respond "Strength: #{str}"
     "Charisma: #{cha}"
   elsif statName == "name"
-    "Character name is #{name}"
+    "Character name is '#{name}'"
   else
     "#{name}'s #{statName.capitalize} is #{statNum}. The bonus is #{(statNum.to_i-10)/2}."
   end
