@@ -20,6 +20,25 @@ def statCheck(checkMe) #checks for a valid attribute, and returns that as lower 
   end
 end
 
+def statExpand(stat) #expands from cha to Charisma. So forth.
+  case stat
+  when 'dex'
+    return "Dexterity"
+  when 'int'
+    return "Intelligence"
+  when 'con'
+    return "Constitution"
+  when 'wis'
+    return "Wisom"
+  when 'str'
+    return "Strength"
+  when 'cha'
+    return "Charisma"
+  else
+    return "hi!"
+  end
+end
+
 bot.message(from: not!("Iblan"), containing: "Suck it Ian!") do |event| #Will probably make this cooler. You'll see.
   event.respond "#{event.author.mention} fires an arrow at Ian!"
 end
@@ -231,7 +250,6 @@ bot.command(:showMe, description: "Tells you one of your stats", usage: "/showMe
     wis = $redis.get "#{player}:wis"
     str = $redis.get "#{player}:str"
     cha = $redis.get "#{player}:cha"
-    #event.respond $redis.get "#{player}"
     event.respond "Name: #{name}"
     event.respond "Dexterity: #{dex}"
     event.respond "Constitution: #{con}"
@@ -242,7 +260,7 @@ bot.command(:showMe, description: "Tells you one of your stats", usage: "/showMe
   elsif statName == "name"
     "Character name is '#{name}'"
   else
-    "#{name}'s #{statName.capitalize} is #{statNum}. The bonus is #{(statNum.to_i-10)/2}."
+    "#{name}'s #{statExpand(statName)} is #{statNum}. The bonus is #{(statNum.to_i-10)/2}."
   end
 end
 
