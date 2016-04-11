@@ -65,13 +65,14 @@ def rollNoBonus(player, diceAmount, diceType) #Does the work to do a roll that d
   rolls = Array.new()
   text = String.new()
   name = $redis.get "#{player}:name"
-  text << "#{player} rolled #{diceAmount}, #{diceType} sided die...\n"
+  text << "#{name} rolled #{diceAmount}, #{diceType} sided die...\n"
   totRoll = 0
  for i in 1..(diceAmount)
   rolls[i] = (rand(1..diceType))
   totRoll += rolls[i]
   text << "Roll #{i}: #{rolls[i]} \n"
  end
+ text  << "\nTotal: #{totRoll}"
  return text
 end
 
