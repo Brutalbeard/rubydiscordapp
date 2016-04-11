@@ -44,6 +44,23 @@ def bonuses(player, stat) #reusable stat bonus
     return (number.to_i-10)/2
 end
 
+def showAll(player) #takes the player ID, and give back all their stats. Had this elswhere, looks prettier here. 
+  dex = $redis.get "#{player}:dex"
+  name = $redis.get "#{player}:name"
+  con = $redis.get "#{player}:con"
+  int = $redis.get "#{player}:int"
+  wis = $redis.get "#{player}:wis"
+  str = $redis.get "#{player}:str"
+  cha = $redis.get "#{player}:cha"
+  """Name: #{name}
+  Dexterity: #{dex}
+  Constitution: #{con}
+  Intelligence: #{int}
+  Wisdom: #{wis}
+  Strength: #{str}
+  Charisma: #{cha}"""
+end
+
 bot.message(from: not!("Iblan"), containing: "Suck it Ian!") do |event| #Will probably make this cooler. You'll see.
   event.respond "#{event.author.mention} fires an arrow at Ian!"
 end
@@ -247,20 +264,7 @@ bot.command(:showMe, description: "Tells you one of your stats", usage: "/showMe
   if statName == nil
     "#{arg} is not a valid Attribute"
   elsif statName == "all"
-    dex = $redis.get "#{player}:dex"
-    name = $redis.get "#{player}:name"
-    con = $redis.get "#{player}:con"
-    int = $redis.get "#{player}:int"
-    wis = $redis.get "#{player}:wis"
-    str = $redis.get "#{player}:str"
-    cha = $redis.get "#{player}:cha"
-    event.respond "Name: #{name}"
-    event.respond "Dexterity: #{dex}"
-    event.respond "Constitution: #{con}"
-    event.respond "Intelligence: #{int}"
-    event.respond "Wisdom: #{wis}"
-    event.respond "Strength: #{str}"
-    "Charisma: #{cha}"
+    showAll(player)
   elsif statName == "name"
     "Character name is '#{name}'"
   else
