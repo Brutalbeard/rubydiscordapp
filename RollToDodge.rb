@@ -244,6 +244,7 @@ bot.command(:showMe, description: "Tells you one of your stats", usage: "/showMe
   statName = statCheck(arg)
   name = $redis.get "#{player}:name"
   statNum = $redis.get "#{player}:#{statName}"
+  bonus = bonuses(player, statName)
   if statName == nil
     "#{arg} is not a valid Attribute"
   elsif statName == "all"
@@ -264,7 +265,7 @@ bot.command(:showMe, description: "Tells you one of your stats", usage: "/showMe
   elsif statName == "name"
     "Character name is '#{name}'"
   else
-    "#{name}'s #{statExpand(statName)} is #{statNum}. The bonus is #{bonuses(player, statName)}."
+    "#{name}'s #{statExpand(statName)} is #{statNum}. The bonus is #{bonus}."
   end
 end
 
