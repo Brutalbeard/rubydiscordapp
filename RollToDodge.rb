@@ -71,7 +71,7 @@ def rollNoBonus(player, diceAmount, diceType) #Does the work to do a roll that d
   totRoll += rolls[i]
   text << "Roll #{i}: #{rolls[i]} \n"
  end
- text
+ return text
 end
 
 bot.message(from: not!("Iblan"), containing: "Suck it Ian!") do |event| #Will probably make this cooler. You'll see.
