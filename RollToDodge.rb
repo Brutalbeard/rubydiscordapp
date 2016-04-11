@@ -39,6 +39,11 @@ def statExpand(stat) #expands from cha to Charisma. So forth.
   end
 end
 
+def bonuses(player, stat) #reusable stat bonus
+    number = $redis.get "#{player}:#{stat}"
+    return (number-10)/2
+end
+
 bot.message(from: not!("Iblan"), containing: "Suck it Ian!") do |event| #Will probably make this cooler. You'll see.
   event.respond "#{event.author.mention} fires an arrow at Ian!"
 end
@@ -234,7 +239,6 @@ bot.command(:changeStat, description: "If you screwed the pooch, ask Johnny or F
   end
 end
 
-
 bot.command(:showMe, description: "Tells you one of your stats", usage: "/showMe name, or /showMe con, or /showMe all") do |event, arg|
   player = event.user.id
   statName = statCheck(arg)
@@ -260,7 +264,7 @@ bot.command(:showMe, description: "Tells you one of your stats", usage: "/showMe
   elsif statName == "name"
     "Character name is '#{name}'"
   else
-    "#{name}'s #{statExpand(statName)} is #{statNum}. The bonus is #{(statNum.to_i-10)/2}."
+    "#{name}'s #{statExpand(statName)} is #{statNum}. The bonus is #{bonuses(statName)}."
   end
 end
 
