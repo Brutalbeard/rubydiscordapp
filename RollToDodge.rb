@@ -41,7 +41,7 @@ end
 
 def bonuses(player, stat) #reusable stat bonus
     number = $redis.get "#{player}:#{stat}"
-    return (number-10)/2
+    return (number.to_i-10)/2
 end
 
 bot.message(from: not!("Iblan"), containing: "Suck it Ian!") do |event| #Will probably make this cooler. You'll see.
