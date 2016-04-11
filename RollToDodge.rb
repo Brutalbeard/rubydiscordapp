@@ -264,7 +264,7 @@ bot.command(:showMe, description: "Tells you one of your stats", usage: "/showMe
   elsif statName == "name"
     "Character name is '#{name}'"
   else
-    "#{name}'s #{statExpand(statName)} is #{statNum}. The bonus is #{bonuses(statName)}."
+    "#{name}'s #{statExpand(statName)} is #{statNum}. The bonus is #{bonuses(player, statName)}."
   end
 end
 
