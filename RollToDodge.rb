@@ -55,13 +55,10 @@ def showAll(player) #takes the player ID, and give back all their stats. Had thi
   "Name: #{name}\nDexterity: #{dex}\nConstitution: #{con}\nIntelligence: #{int}\nWisdom: #{wis}\nStrength: #{str}\nCharisma: #{cha}"
 end
 
-def rollNoBonus(player, diceAmount, diceType, stat) #Does the work to do a roll that doesn't include a bonus
+def rollNoBonus(player, diceAmount, diceType) #Does the work to do a roll that doesn't include a bonus
   rolls = Array.new()
   text = String.new()
   name = $redis.get "#{player}:name"
-  bonus = $redis.get "#{player}:#{statCheck(stat)}"
-  bonus.to_i
-  bonus = (bonus-10)/2
   text << "#{name} rolled #{diceAmount}, #{diceType} sided die...\n"
   totRoll = 0
  for i in 1..(diceAmount)
@@ -70,9 +67,6 @@ def rollNoBonus(player, diceAmount, diceType, stat) #Does the work to do a roll 
   text << "Roll #{i}: #{rolls[i]} \n"
  end
  text  << "\nTotal: #{totRoll}"
- if bonus > 0
-   text << "\n...with a bonus of #{bonus}, for a grand total of #{totRoll + bonus}"
- end
  return text
 end
 
@@ -96,7 +90,7 @@ bot.command(:roll, description: "Returns a roll.", usage: "Type /roll 1d20 as an
     diceAmount = arg.split("d")[0].to_i
     diceType = arg.split("d")[1].to_i
     stat = arg.split("+")[1]
-    rollNoBonus(player, diceAmount, diceType, stat)
+    rollNoBonus(player, diceAmount, diceType)
   end
 end
 
