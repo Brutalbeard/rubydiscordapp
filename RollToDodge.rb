@@ -60,6 +60,8 @@ def rollNoBonus(player, diceAmount, diceType, stat) #Does the work to do a roll 
   text = String.new()
   name = $redis.get "#{player}:name"
   bonus = $redis.get "#{player}:#{statCheck(stat)}"
+  bonus.to_i
+  bonus = (bonus-10)/2
   text << "#{name} rolled #{diceAmount}, #{diceType} sided die...\n"
   totRoll = 0
  for i in 1..(diceAmount)
@@ -68,7 +70,7 @@ def rollNoBonus(player, diceAmount, diceType, stat) #Does the work to do a roll 
   text << "Roll #{i}: #{rolls[i]} \n"
  end
  text  << "\nTotal: #{totRoll}"
- if bonus != nil
+ if bonus > 0
    text << "\n...with a bonus of #{bonus}, for a grand total of #{totRoll + bonus}"
  end
  return text
