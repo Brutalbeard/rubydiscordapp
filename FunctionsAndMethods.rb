@@ -1,4 +1,4 @@
-def rollNoBonus(player, diceAmount, diceType) #checks for a valid attribute, and returns that as lower case
+def rollWithBonus(player, diceAmount, diceType, statName) #checks for a valid attribute, and returns that as lower case
   rolls = Array.new()
   text = String.new()
   text << "#{player} rolled #{diceAmount}, #{diceType} sided die...\n"

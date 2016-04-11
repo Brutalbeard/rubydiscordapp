@@ -52,13 +52,7 @@ def showAll(player) #takes the player ID, and give back all their stats. Had thi
   wis = $redis.get "#{player}:wis"
   str = $redis.get "#{player}:str"
   cha = $redis.get "#{player}:cha"
-  "Name: #{name}\n
-  Dexterity: #{dex}\n
-  Constitution: #{con}\n
-  Intelligence: #{int}\n
-  Wisdom: #{wis}\n
-  Strength: #{str}\n
-  Charisma: #{cha}"
+  "Name: #{name}\nDexterity: #{dex}\nConstitution: #{con}\nIntelligence: #{int}\nWisdom: #{wis}\nStrength: #{str}\nCharisma: #{cha}"
 end
 
 def rollNoBonus(player, diceAmount, diceType) #Does the work to do a roll that doesn't include a bonus
@@ -88,13 +82,13 @@ bot.command(:shoot, description: "Shoots and arrow at whoever, or whatever you w
   "#{event.author.mention} shoots an arrow at #{arg} for #{rand(1..8)} damage!"
 end
 
-bot.command(:roll, description: "Returns a roll.", usage: "Type /roll 1d20 as an example") do |event, arg| # so the description and the usage are both for help. That's something the message above doesn't have. Event means, it happened I guess? Little fuzzy there. Then the 'arg' is whatever they type in after calling the command. Which runs through old faithful down below.
+bot.command(:roll, description: "Returns a roll.", usage: "Type /roll 1d20 as an example") do |event, *args| # so the description and the usage are both for help. That's something the message above doesn't have. Event means, it happened I guess? Little fuzzy there. Then the 'arg' is whatever they type in after calling the command. Which runs through old faithful down below.
   player = event.user.id
   if arg.match(/\d{1,}[d]\d{1,2}/) == nil
     text = "Wrong syntax. Try /help roll"
   else
-    diceAmount = arg.split("d")[0].to_i
-    diceType = arg.split("d")[1].to_i
+    diceAmount = args[0].split("d")[0].to_i
+    diceType = args[0].split("d")[1].to_i
     rollNoBonus(player, diceAmount, diceType)
   end
 end
