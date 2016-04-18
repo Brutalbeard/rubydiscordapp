@@ -274,8 +274,8 @@ bot.command(:showMe, description: "Tells you one of your stats", usage: "/showMe
   end
 end
 
-conn = TCPSocket.new 'f722ff4d.carbon.hostedgraphite.com', 2003 # For sending metrics to Heroku
-conn.puts "69ca9c3a-b9ac-4a42-9709-2d880e8d2f75.test.testing 1.2\n"
+conn = TCPSocket.new '03b44bf8.carbon.hostedgraphite.com', 2003
+conn.puts "1a0070e2-3304-4249-9261-81929511df13.test.testing 1.2\n"
 conn.close
 
 bot.run
