@@ -274,8 +274,4 @@ bot.command(:showMe, description: "Tells you one of your stats", usage: "/showMe
   end
 end
 
-conn = TCPSocket.new '03b44bf8.carbon.hostedgraphite.com', 2003
-conn.puts "1a0070e2-3304-4249-9261-81929511df13.test.testing 1.2\n"
-conn.close
-
 bot.run
