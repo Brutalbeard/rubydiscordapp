@@ -5,8 +5,6 @@ require 'open-uri'
 require 'pstore'
 require 'redis'
 require 'socket'
-require 'functions'
-require 'privateData'
 
 $redis = Redis.new(url: ENV["REDIS_URL"])
 
