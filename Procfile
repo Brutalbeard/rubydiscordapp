@@ -1,1 +1,1 @@
-worker: bundle exec ruby RollToDodge.rb
+worker: bundle exec ruby config.ru
