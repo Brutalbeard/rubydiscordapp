@@ -8,7 +8,7 @@ require 'socket'
 
 $redis = Redis.new(url: ENV["REDIS_URL"])
 
-bot = Discordrb::Commands::CommandBot.new($email, $password, "/", {advanced_functionality: false}) #credentials for login, the last string is the thing you have to type to run our commands.
+bot = Discordrb::Commands::CommandBot.new("jceloria@icloud.com", "bitemeweirddude", "/", {advanced_functionality: false}) #credentials for login, the last string is the thing you have to type to run our commands.
 
 def statCheck(checkMe) #checks for a valid attribute, and returns that as lower case
   returnMe = nil
