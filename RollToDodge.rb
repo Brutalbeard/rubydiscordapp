@@ -7,8 +7,8 @@ require 'redis'
 require 'socket'
 
 $redis = Redis.new(url: ENV["REDIS_URL"])
-
-bot = Discordrb::Commands::CommandBot.new("jceloria@icloud.com", "bitemeweirddude", "/", {advanced_functionality: false}) #credentials for login, the last string is the thing you have to type to run our commands.
+bot = Discordrb::Bot.new token: 'MTY4NzI4MzM2OTc2MDUyMjI0.Cf03iw.2IPlZbTm-h3yRrJV8oIrka8ffvo', application_id: 168728336976052224
+#bot = Discordrb::Commands::CommandBot.new("jceloria@icloud.com", "bitemeweirddude", "/", {advanced_functionality: false}) #credentials for login, the last string is the thing you have to type to run our commands.
 
 def statCheck(checkMe) #checks for a valid attribute, and returns that as lower case
   returnMe = nil
@@ -274,8 +274,17 @@ bot.command(:showMe, description: "Tells you one of your stats", usage: "/showMe
   end
 end
 
-conn = TCPSocket.new '03b44bf8.carbon.hostedgraphite.com', 2003
-conn.puts "1a0070e2-3304-4249-9261-81929511df13.test.testing 1.2\n"
-conn.close
+bot.command(:callVote) do |event, *args|
+
+  voteName = args[0]
+  args.delete_at(0)
+
+  $redis.set "#{voteName}"
+
+  "#{event.user.name} has called a vote on:
+  #{args.join(' ')}
+  Use /castVote #{voteName} to give your answer."
+
+end
 
 bot.run
