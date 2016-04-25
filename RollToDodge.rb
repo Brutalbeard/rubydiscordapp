@@ -266,7 +266,7 @@ bot.command(:showMe, description: "Tells you one of your stats", usage: "/showMe
   name = $redis.get "#{player}:name"
   statNum = $redis.get "#{player}:#{statName}"
   if statName == nil
-    "#{arg} is not a valid Attribute"
+    "#{arg.join(" ")} is not a valid Attribute"
   elsif statName == "all"
     showAll(player)
   elsif statName == "name"
