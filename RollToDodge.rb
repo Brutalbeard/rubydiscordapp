@@ -122,15 +122,16 @@ bot.command(:define, description: "Defines a word using Urban Dictionary", usage
   event << parse(get_uri(urbandictionary_uri(args)))['list'].first['definition']}
 
 bot.command(:whoami, description: "Gives your name and user ID. Also tells you your chat channel and game you're playing", usage: "/whoami") do |event|
-  event.respond "User Name: #{event.user.name}\n"
+  text = "User Name: #{event.user.name}\n"
   #event.respond "#{event.user.status}\n"
-  event.respond "User ID: #{event.user.id}\n"
+  text <<  "User ID: #{event.user.id}\n"
   if event.user.voice_channel != nil
-    event.respond "Talking in: #{event.user.voice_channel}"
+    text << "Talking in: #{event.user.voice_channel}"
   end
   if event.user.game != nil
-    event.respond "Playing: #{event.user.game}"
+    text << "Playing: #{event.user.game}"
   end
+  text
 end
 
 bot.command(:whois, description: "Gives you the useful info about your cohorts", usage: "/whois @RollToDodge") do |event, arg|
