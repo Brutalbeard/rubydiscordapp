@@ -23,8 +23,6 @@ end
 
 def statExpand(stat) #expands from cha to Charisma. So forth.
   case stat
-  when 'food'
-    return "Favorite Food"
   when 'dex'
     return "Dexterity"
   when 'int'
@@ -55,8 +53,7 @@ def showAll(player) #takes the player ID, and give back all their stats. Had thi
   wis = $redis.get "#{player}:wis"
   str = $redis.get "#{player}:str"
   cha = $redis.get "#{player}:cha"
-  food = $redis.get "#{player}:food"
-  "Name: #{name}\nDexterity: #{dex}\nConstitution: #{con}\nIntelligence: #{int}\nWisdom: #{wis}\nStrength: #{str}\nCharisma: #{cha}\nFavorit Food #{food}"
+  "Name: #{name}\nDexterity: #{dex}\nConstitution: #{con}\nIntelligence: #{int}\nWisdom: #{wis}\nStrength: #{str}\nCharisma: #{cha}"
 end
 
 def rollNoBonus(player, diceAmount, diceType) #Does the work to do a roll that doesn't include a bonus
