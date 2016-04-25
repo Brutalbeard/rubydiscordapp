@@ -232,7 +232,7 @@ end
 
 bot.command(:makeMe, description: "Initializes your character sheet", usage: "/makeMe Connor") do |event, *args|
   player = event.user.id
-  "Copy this : #{player}, then go here https://brutalsapis.herokuapp.com/form"
+  event.user.pm "Copy this : #{player}, then go here https://brutalsapis.herokuapp.com/form"
 end
 
 bot.command(:makeStat, description: "Generates a stat, checks for preexisting.", usage: "/makeStat con 10") do |event, *args|
