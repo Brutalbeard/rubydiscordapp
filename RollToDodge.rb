@@ -135,15 +135,16 @@ end
 
 bot.command(:whois, description: "Gives you the useful info about your cohorts", usage: "/whois @RollToDodge") do |event, arg|
   user1 = bot.parse_mention(arg)
-  event.respond "User Name: #{user1.name} \n"
-  event.respond "#{user1.status}\n"
-  event.respond "User ID: #{user1.id}\n"
+  text =  "User Name: #{user1.name} \n"
+  text << "#{user1.status}\n"
+  text << "User ID: #{user1.id}\n"
   if user1.voice_channel != nil
-    event.respond "Talking in: #{user1.voice_channel.name}"
+    text << "Talking in: #{user1.voice_channel.name}"
   end
   if user1.game != nil
-    event.respond "Playing: #{user1.game}"
+    text << "Playing: #{user1.game}"
   end
+  text
 end
 
 #set Tom up with Appendages so we can remove them!
