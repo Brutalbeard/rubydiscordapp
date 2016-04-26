@@ -135,8 +135,8 @@ bot.command(:whoami, description: "Gives your name and user ID. Also tells you y
 end
 
 bot.command(:whois, description: "Gives you the useful info about your cohorts", usage: "/whois @RollToDodge") do |event, arg|
-  user1 = bot.parse_mention(arg).id
-  text =  "User Name: #{user1.name} \n"
+  user1 = bot.parse_mention(arg)
+  text =  "User Name: #{user1.name}\n"
   text << "Status: #{user1.status}\n"
   text << "User ID: #{user1.id}\n"
   if user1.voice_channel != nil
@@ -230,7 +230,7 @@ bot.command(:gifme, description: "Gives you a random gif based off what you type
 
 end
 
-bot.command(:makeMe, description: "Initializes your character sheet", usage: "/makeMe Connor") do |event, *args|
+bot.command(:makeMe, description: "Initializes your character sheet, using a kick ass website that Johnny built.", usage: "/makeMe") do |event, *args|
   player = event.user.id
   event.user.pm "https://brutalsapis.herokuapp.com/form/:#{player}"
   ""
