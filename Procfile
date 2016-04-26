@@ -1,1 +1,1 @@
-worker: bundle exec ruby RollToDodge.rb
+web: bundle exec ruby RollToDodge.rb -p $PORT
