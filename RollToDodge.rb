@@ -232,7 +232,7 @@ end
 
 bot.command(:makeMe, description: "Initializes your character sheet", usage: "/makeMe Connor") do |event, *args|
   player = event.user.id
-  event.user.pm "https://brutalsapis.herokuapp.com/form/:#{player}"
+  event.user.pm "https://brutalsapis.herokuapp.com/form:#{player}"
   ""
 end
 
