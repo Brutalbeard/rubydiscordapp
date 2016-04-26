@@ -125,9 +125,6 @@ bot.command(:whoami, description: "Gives your name and user ID. Also tells you y
   text = "User Name: #{event.user.name}\n"
   #event.respond "#{event.user.status}\n"
   text <<  "User ID: #{event.user.id}\n"
-  if event.user.voice_channel != nil
-    text << "Talking in: #{event.user.voice_channel}\n"
-  end
   if event.user.game != nil
     text << "Playing: #{event.user.game}"
   end
@@ -135,13 +132,12 @@ bot.command(:whoami, description: "Gives your name and user ID. Also tells you y
 end
 
 bot.command(:whois, description: "Gives you the useful info about your cohorts", usage: "/whois @RollToDodge") do |event, arg|
+event.respond "#{arg}"
   user = bot.parse_mention(arg)
+  event.respond "#{user}"
   text = "User Name: #{user.name}\n"
   text << "Status: #{user.status}\n"
   text << "User ID: #{user.id}\n"
-  if user.voice_channel != nil
-    text << "Talking in: #{user.voice_channel.name}\n"
-  end
   if user.game != nil
     text << "Playing: #{user.game}"
   end
