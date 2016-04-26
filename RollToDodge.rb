@@ -7,8 +7,8 @@ require 'redis'
 require 'socket'
 
 $redis = Redis.new(url: ENV["REDIS_URL"])
-#bot = Discordrb::Bot.new token: 'MTY4NzI4MzM2OTc2MDUyMjI0.Cf03iw.2IPlZbTm-h3yRrJV8oIrka8ffvo', application_id: 168728336976052224
-bot = Discordrb::Commands::CommandBot.new("jceloria@icloud.com", "bitemeweirddude", "/", {advanced_functionality: false}) #credentials for login, the last string is the thing you have to type to run our commands.
+bot = Discordrb::Bot.new token: 'MTY4NzI4MzM2OTc2MDUyMjI0.Cf03iw.2IPlZbTm-h3yRrJV8oIrka8ffvo', application_id: 168728336976052224
+#bot = Discordrb::Commands::CommandBot.new("jceloria@icloud.com", "bitemeweirddude", "/", {advanced_functionality: false}) #credentials for login, the last string is the thing you have to type to run our commands.
 
 def statCheck(checkMe) #checks for a valid attribute, and returns that as lower case
   returnMe = nil
