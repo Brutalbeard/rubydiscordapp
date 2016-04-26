@@ -132,9 +132,7 @@ bot.command(:whoami, description: "Gives your name and user ID. Also tells you y
 end
 
 bot.command(:whois, description: "Gives you the useful info about your cohorts", usage: "/whois @RollToDodge") do |event, arg|
-event.respond "#{arg}"
   user = bot.parse_mention(arg)
-  event.respond "#{user}"
   text = "User Name: #{user.name}\n"
   text << "Status: #{user.status}\n"
   text << "User ID: #{user.id}\n"
