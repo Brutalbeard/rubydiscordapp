@@ -12,7 +12,7 @@ bot = Discordrb::Commands::CommandBot.new token: 'MTY4NzI4MzM2OTc2MDUyMjI0.CgB81
 
 def statCheck(checkMe) #checks for a valid attribute, and returns that as lower case
   returnMe = nil
-  returnMe = checkMe.match(/dex|con|int|str|wis|cha|name|all|food/i)
+  returnMe = checkMe.match(/dex|con|int|str|wis|cha|name|all|food|hp/i)
 
   if returnMe != nil
     return returnMe.to_s.downcase
@@ -35,6 +35,8 @@ def statExpand(stat) #expands from cha to Charisma. So forth.
     return "Strength"
   when 'cha'
     return "Charisma"
+  when 'hp'
+    return "Hit Points"
   else
     return "hi!"
   end
@@ -53,7 +55,8 @@ def showAll(player) #takes the player ID, and give back all their stats. Had thi
   wis = $redis.get "#{player}:wis"
   str = $redis.get "#{player}:str"
   cha = $redis.get "#{player}:cha"
-  "Name: #{name}\nDexterity: #{dex}\nConstitution: #{con}\nIntelligence: #{int}\nWisdom: #{wis}\nStrength: #{str}\nCharisma: #{cha}"
+  hp = $redis.get "#{player}:hp"
+  "Name: #{name}\nDexterity: #{dex}\nConstitution: #{con}\nIntelligence: #{int}\nWisdom: #{wis}\nStrength: #{str}\nCharisma: #{cha}\nHit Points: #{hp}"
 end
 
 def rollNoBonus(player, diceAmount, diceType) #Does the work to do a roll that doesn't include a bonus
